@@ -1,0 +1,74 @@
+{
+    "name": "phphd/exception-toolkit",
+    "description": "Exception processing toolkit",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Yevhen Sidelnyk",
+            "email": "zsidelnik@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=8.1"
+    },
+    "require-dev": {
+        "symfony/http-kernel": "^6.0 | ^7.0",
+        "symfony/dependency-injection": "^6.2 | ^7.0",
+        "symfony/config": "^6.0 | ^7.0",
+        "symfony/messenger": "^6.4 | ^7.0",
+        "amphp/amp": "^3.0",
+        "symfony/var-dumper": "^6.0 | ^7.0",
+        "tomasvotruba/type-coverage": "^0.3.1",
+        "phpstan/phpstan": "^1.11",
+        "phpunit/phpunit": "^10.5",
+        "phpstan/phpstan-phpunit": "^1.4",
+        "phphd/coding-standard": "~0.5.3",
+        "nyholm/symfony-bundle-test": "^3.0"
+    },
+    "conflict": {
+        "symfony/http-kernel": "<6.0 || >=8.0",
+        "symfony/dependency-injection": "<6.2 || >=8.0" ,
+        "symfony/config": "<6.0 || >=8.0",
+        "symfony/messenger": ">=8.0",
+        "amphp/amp": ">=4.0"
+    },
+    "suggest": {
+        "symfony/messenger": "There's an unwrapper for Messenger exceptions of ^6.4 or above",
+        "amphp/amp": "There's an unwrapper for Amp exceptions of ^3.0 or above"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/phphd/coding-standard"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "PhPhD\\ExceptionToolkit\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PhPhD\\ExceptionToolkit\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "ci:pack": [
+            "@ci:ecs",
+            "@ci:rector",
+            "@ci:phpstan",
+            "@ci:unit-test",
+            "@ci:integration-test"
+        ],
+        "ci:ecs": "vendor/bin/ecs check",
+        "ci:ecs-fix": "vendor/bin/ecs check --fix",
+        "ci:rector": "vendor/bin/rector process --dry-run -vv",
+        "ci:rector-fix": "vendor/bin/rector process",
+        "ci:phpstan": "vendor/bin/phpstan analyze",
+        "ci:test": "vendor/bin/phpunit --testdox --colors=always",
+        "ci:unit-test": "vendor/bin/phpunit --testdox --colors=always --testsuite=Unit",
+        "ci:integration-test": "vendor/bin/phpunit --testdox --colors=always --testsuite=Integration"
+    }
+}

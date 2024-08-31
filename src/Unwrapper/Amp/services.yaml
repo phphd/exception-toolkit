@@ -1,0 +1,7 @@
+services:
+    phd_exception_toolkit.exception_unwrapper.amp:
+        class: PhPhD\ExceptionToolkit\Unwrapper\Amp\AmpExceptionUnwrapper
+        decorates: phd_exception_toolkit.exception_unwrapper.stack
+        arguments:
+            - '@.inner'
+            - '@phd_exception_toolkit.exception_unwrapper'
