@@ -1,0 +1,7 @@
+services:
+    phd_exception_toolkit.exception_unwrapper.messenger:
+        class: PhPhD\ExceptionToolkit\Unwrapper\Messenger\MessengerExceptionUnwrapper
+        decorates: phd_exception_toolkit.exception_unwrapper.stack
+        arguments:
+            - '@.inner'
+            - '@phd_exception_toolkit.exception_unwrapper'

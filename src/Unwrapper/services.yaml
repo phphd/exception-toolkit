@@ -1,0 +1,12 @@
+services:
+    phd_exception_toolkit.exception_unwrapper:
+        class: PhPhD\ExceptionToolkit\Unwrapper\ExceptionUnwrapper
+        factory:
+            - !service_locator
+                stack: '@phd_exception_toolkit.exception_unwrapper.stack'
+            - get
+        arguments: [ stack ]
+        lazy: true
+
+    phd_exception_toolkit.exception_unwrapper.stack:
+        class: PhPhD\ExceptionToolkit\Unwrapper\PassThroughExceptionUnwrapper

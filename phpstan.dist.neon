@@ -1,0 +1,20 @@
+includes:
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-phpunit/rules.neon
+    - vendor/tomasvotruba/type-coverage/config/extension.neon
+
+parameters:
+    level: 9
+    phpVersion: 80127
+    editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
+    paths:
+        - src
+        - tests
+    fileExtensions:
+        - 'php'
+    type_coverage:
+        declare: 100
+        return_type: 100
+        param_type: 100
+        property_type: 100
+        constant: 0 # requires php 8.3
