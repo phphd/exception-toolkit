@@ -10,6 +10,7 @@ use Throwable;
 
 use function array_map;
 use function array_merge;
+use function array_values;
 
 final class AmpExceptionUnwrapper implements ExceptionUnwrapper
 {
@@ -25,9 +26,11 @@ final class AmpExceptionUnwrapper implements ExceptionUnwrapper
             return $this->innerUnwrapper->unwrap($exception);
         }
 
+        $wrappedExceptions = array_values($exception->getReasons());
+
         $unwrapped = array_map(
             $this->outerUnwrapper->unwrap(...),
-            $exception->getReasons(),
+            $wrappedExceptions,
         );
 
         return array_merge(...$unwrapped);

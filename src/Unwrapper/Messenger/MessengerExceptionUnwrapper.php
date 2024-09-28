@@ -10,6 +10,7 @@ use Throwable;
 
 use function array_map;
 use function array_merge;
+use function array_values;
 
 final class MessengerExceptionUnwrapper implements ExceptionUnwrapper
 {
@@ -25,8 +26,8 @@ final class MessengerExceptionUnwrapper implements ExceptionUnwrapper
             return $this->innerUnwrapper->unwrap($exception);
         }
 
-        /** @var non-empty-array<Throwable> $wrappedExceptions */
-        $wrappedExceptions = $exception->getWrappedExceptions();
+        /** @var non-empty-list<Throwable> $wrappedExceptions */
+        $wrappedExceptions = array_values($exception->getWrappedExceptions());
 
         $unwrappedExceptions = array_map(
             $this->outerUnwrapper->unwrap(...),

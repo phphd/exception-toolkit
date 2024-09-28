@@ -75,9 +75,9 @@ final class ExceptionUnwrapperUnitTest extends TestCase
                 new HandlerFailedException(
                     Envelope::wrap(new stdClass()),
                     [
-                        $exception1,
+                        'first' => $exception1,
                         new CompositeException([
-                            $exception2,
+                            'second' => $exception2,
                         ]),
                     ],
                 ),
