@@ -30,7 +30,6 @@ final class DependencyInjectionIntegrationTest extends BundleTestCase
 
     private function checkTopmostUnwrapper(): void
     {
-        /** @var LazyObjectInterface|mixed $exceptionUnwrapper */
         $exceptionUnwrapper = self::getContainer()->get('phd_exception_toolkit.exception_unwrapper');
         self::assertInstanceOf(LazyObjectInterface::class, $exceptionUnwrapper);
         self::assertFalse($exceptionUnwrapper->isLazyObjectInitialized());
