@@ -13,13 +13,21 @@
     "require": {
         "php": ">=8.1"
     },
+    "conflict": {
+        "php": ">=9.0",
+        "symfony/http-kernel": "<6.0 || >8.4",
+        "symfony/dependency-injection": "<6.2 || >8.4" ,
+        "symfony/config": "<6.0 || >8.4",
+        "symfony/messenger": ">8.4",
+        "amphp/amp": ">=4.0"
+    },
     "require-dev": {
-        "symfony/http-kernel": "^6.0 | ^7.0",
-        "symfony/dependency-injection": "^6.2 | ^7.0",
-        "symfony/config": "^6.0 | ^7.0",
-        "symfony/messenger": "^6.4 | ^7.0",
-        "amphp/amp": "^3.0",
-        "symfony/var-dumper": "^6.0 | ^7.0",
+        "symfony/http-kernel": ">=6.0",
+        "symfony/dependency-injection": ">=6.2",
+        "symfony/config": ">=6.0",
+        "symfony/messenger": ">=6.4",
+        "amphp/amp": ">=3.0.2",
+        "symfony/var-dumper": ">=6.0",
         "phphd/coding-standard": "~0.6.2",
         "phpstan/phpstan": "^2.1.32",
         "phpstan/phpstan-phpunit": "^2.0.8",
@@ -27,13 +35,6 @@
         "tomasvotruba/type-coverage": "^2.0.2",
         "phpunit/phpunit": "^10.5.30",
         "nyholm/symfony-bundle-test": "^3.0"
-    },
-    "conflict": {
-        "symfony/http-kernel": "<6.0 || >=8.0",
-        "symfony/dependency-injection": "<6.2 || >=8.0" ,
-        "symfony/config": "<6.0 || >=8.0",
-        "symfony/messenger": ">=8.0",
-        "amphp/amp": ">=4.0"
     },
     "suggest": {
         "symfony/messenger": "There's an unwrapper for Messenger exceptions of ^6.4 or above",
