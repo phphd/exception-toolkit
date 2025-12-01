@@ -1,5 +1,6 @@
 services:
-    phd_exception_toolkit.exception_unwrapper:
+    PhPhD\ExceptionToolkit\Unwrapper\ExceptionUnwrapper:
+        public: true
         class: PhPhD\ExceptionToolkit\Unwrapper\ExceptionUnwrapper
         factory:
             - !service_locator
@@ -7,6 +8,3 @@ services:
             - get
         arguments: [ stack ]
         lazy: true
-
-    phd_exception_toolkit.exception_unwrapper.stack:
-        class: PhPhD\ExceptionToolkit\Unwrapper\PassThroughExceptionUnwrapper

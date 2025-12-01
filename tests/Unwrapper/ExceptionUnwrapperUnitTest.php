@@ -6,17 +6,15 @@ namespace PhPhD\ExceptionToolkit\Tests\Unwrapper;
 
 use Amp\CompositeException;
 use Exception;
-use PhPhD\ExceptionToolkit\Unwrapper\Amp\AmpExceptionUnwrapper;
+use PhPhD\ExceptionToolkit\Bundle\DependencyInjection\PhdExceptionToolkitExtension;
 use PhPhD\ExceptionToolkit\Unwrapper\ExceptionUnwrapper;
-use PhPhD\ExceptionToolkit\Unwrapper\Messenger\MessengerExceptionUnwrapper;
-use PhPhD\ExceptionToolkit\Unwrapper\PassThroughExceptionUnwrapper;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
-use Throwable;
 
 /**
+ * @covers \PhPhD\ExceptionToolkit\Bundle\DependencyInjection\PhdExceptionToolkitExtension
  * @covers \PhPhD\ExceptionToolkit\Unwrapper\PassThroughExceptionUnwrapper
  * @covers \PhPhD\ExceptionToolkit\Unwrapper\Amp\AmpExceptionUnwrapper
  * @covers \PhPhD\ExceptionToolkit\Unwrapper\Messenger\MessengerExceptionUnwrapper
@@ -31,19 +29,15 @@ final class ExceptionUnwrapperUnitTest extends TestCase
     {
         parent::setUp();
 
-        $this->exceptionUnwrapper = self::createStub(ExceptionUnwrapper::class);
+        $container = PhdExceptionToolkitExtension::getContainer([
+            'kernel.environment' => 'test',
+            'kernel.build_dir' => __DIR__.'/var',
+        ]);
+        $container->compile();
 
-        $stackUnwrapper = new MessengerExceptionUnwrapper(
-            new AmpExceptionUnwrapper(
-                new PassThroughExceptionUnwrapper(),
-                $this->exceptionUnwrapper,
-            ),
-            $this->exceptionUnwrapper,
-        );
-
-        $this->exceptionUnwrapper->method('unwrap')
-            ->willReturnCallback(static fn (Throwable $exception): array => $stackUnwrapper->unwrap($exception))
-        ;
+        /** @var ExceptionUnwrapper $unwrapper */
+        $unwrapper = $container->get(ExceptionUnwrapper::class);
+        $this->exceptionUnwrapper = $unwrapper;
     }
 
     public function testAtomicExceptionIsNotUnwrapped(): void

@@ -4,43 +4,54 @@ declare(strict_types=1);
 
 namespace PhPhD\ExceptionToolkit\Bundle\DependencyInjection;
 
-use Amp\CompositeException as AmpCompositeException;
 use Exception;
-use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Compiler\DecoratorServicePass;
+use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Extension\Extension;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use Symfony\Component\Messenger\Exception\WrappedExceptionsInterface as MessengerCompositeException;
+use Symfony\Component\DependencyInjection\Extension\AbstractExtension;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-use function class_exists;
-use function interface_exists;
+use function array_keys;
+use function array_map;
 
-final class PhdExceptionToolkitExtension extends Extension
+final class PhdExceptionToolkitExtension extends AbstractExtension
 {
     public const ALIAS = 'phd_exception_toolkit';
 
     /**
-     * @param array<array-key,mixed> $configs
-     *
-     * @override
+     * @param array<string,mixed> $parameters required by {@see \Symfony\Component\DependencyInjection\Extension\ExtensionTrait::executeConfiguratorCallback()}:
+     *                                        - kernel.environment
+     *                                        - kernel.build_dir
+     */
+    public static function getContainer(array $parameters): ContainerBuilder
+    {
+        $container = new ContainerBuilder();
+
+        $container->setResourceTracking(false);
+        $container->getCompilerPassConfig()->setBeforeOptimizationPasses([]);
+        $container->getCompilerPassConfig()->setOptimizationPasses([]);
+        $container->getCompilerPassConfig()->setRemovingPasses([]);
+        $container->getCompilerPassConfig()->setAfterRemovingPasses([]);
+
+        $container->registerExtension($extension = new self());
+        $container->loadFromExtension($extension->getAlias());
+
+        $container->addCompilerPass(new DecoratorServicePass(), PassConfig::TYPE_OPTIMIZE);
+
+        array_map($container->setParameter(...), array_keys($parameters), $parameters); // @phpstan-ignore argument.type
+
+        return $container;
+    }
+
+    /**
+     * @param array<array-key,mixed> $config
      *
      * @throws Exception
      */
-    public function load(array $configs, ContainerBuilder $container): void
+    public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
-        /** @var ?string $env */
-        $env = $container->getParameter('kernel.environment');
-
-        $loader = new YamlFileLoader($container, new FileLocator(), $env);
-        $loader->load(__DIR__.'/../../Unwrapper/services.yaml');
-
-        if (class_exists(AmpCompositeException::class)) {
-            $loader->load(__DIR__.'/../../Unwrapper/Amp/services.yaml');
-        }
-
-        if (interface_exists(MessengerCompositeException::class)) {
-            $loader->load(__DIR__.'/../../Unwrapper/Messenger/services.yaml');
-        }
+        $container->import(__DIR__.'/../../**/services.php');
+        $container->import(__DIR__.'/../../**/services.yaml');
     }
 
     /** @override */
