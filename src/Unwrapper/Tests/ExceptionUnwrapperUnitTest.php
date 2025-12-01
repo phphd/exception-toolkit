@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhPhD\ExceptionToolkit\Tests\Unwrapper;
+namespace PhPhD\ExceptionToolkit\Unwrapper\Tests;
 
 use Amp\CompositeException;
 use Exception;

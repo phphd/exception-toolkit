@@ -10,10 +10,10 @@
          failOnWarning="true">
     <testsuites>
         <testsuite name="Unit">
-            <directory suffix="UnitTest.php">tests</directory>
+            <directory suffix="UnitTest.php">src</directory>
         </testsuite>
         <testsuite name="Integration">
-            <directory suffix="IntegrationTest.php">tests</directory>
+            <directory suffix="ServiceTest.php">src</directory>
         </testsuite>
     </testsuites>
 
@@ -22,6 +22,7 @@
             <directory>src</directory>
         </include>
         <exclude>
+            <directory>src/*/Tests</directory>
             <directory>src/*/*/Tests</directory>
             <directory>src/*/*/*/Tests</directory>
             <directory suffix="Test.php">src</directory>

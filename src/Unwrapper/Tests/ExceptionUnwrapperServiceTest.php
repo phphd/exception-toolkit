@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PhPhD\ExceptionToolkit\Tests\Bundle;
+namespace PhPhD\ExceptionToolkit\Unwrapper\Tests;
 
+use PhPhD\ExceptionToolkit\Bundle\Tests\BundleTestCase;
 use PhPhD\ExceptionToolkit\Unwrapper\Amp\AmpExceptionUnwrapper;
+use PhPhD\ExceptionToolkit\Unwrapper\ExceptionUnwrapper;
 use PhPhD\ExceptionToolkit\Unwrapper\Messenger\MessengerExceptionUnwrapper;
 use Symfony\Component\VarExporter\LazyObjectInterface;
 
@@ -14,7 +16,7 @@ use Symfony\Component\VarExporter\LazyObjectInterface;
  *
  * @internal
  */
-final class DependencyInjectionIntegrationTest extends BundleTestCase
+final class ExceptionUnwrapperServiceTest extends BundleTestCase
 {
     public function testServiceDefinitions(): void
     {
@@ -30,7 +32,7 @@ final class DependencyInjectionIntegrationTest extends BundleTestCase
 
     private function checkTopmostUnwrapper(): void
     {
-        $exceptionUnwrapper = self::getContainer()->get('phd_exception_toolkit.exception_unwrapper');
+        $exceptionUnwrapper = self::getContainer()->get(ExceptionUnwrapper::class);
         self::assertInstanceOf(LazyObjectInterface::class, $exceptionUnwrapper);
         self::assertFalse($exceptionUnwrapper->isLazyObjectInitialized());
         $topmostUnwrapper = $exceptionUnwrapper->initializeLazyObject();

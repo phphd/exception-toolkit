@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PhPhD\ExceptionToolkit\Tests\Bundle;
+namespace PhPhD\ExceptionToolkit\Bundle\Tests;
 
 use Nyholm\BundleTest\TestKernel;
 use PhPhD\ExceptionToolkit\Bundle\PhdExceptionToolkitBundle;
-use PhPhD\ExceptionToolkit\Tests\Bundle\Compiler\TestServicesCompilerPass;
+use PhPhD\ExceptionToolkit\Bundle\Tests\Compiler\TestServicesCompilerPass;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpKernel\KernelInterface;
 
