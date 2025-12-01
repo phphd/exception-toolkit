@@ -7,7 +7,7 @@ use Rector\Config\RectorConfig;
 use Rector\ValueObject\PhpVersion;
 
 return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->paths([__DIR__.'/src', __DIR__.'/tests']);
+    $rectorConfig->paths([__DIR__.'/src']);
 
     $rectorConfig->sets([PhdSetList::rector()->getPath()]);
     $rectorConfig->phpVersion(PhpVersion::PHP_81);
