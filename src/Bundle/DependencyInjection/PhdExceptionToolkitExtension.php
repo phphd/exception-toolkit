@@ -23,7 +23,7 @@ final class PhdExceptionToolkitExtension extends AbstractExtension
      *                                        - kernel.environment
      *                                        - kernel.build_dir
      */
-    public static function getContainer(array $parameters): ContainerBuilder
+    public function getContainer(array $parameters): ContainerBuilder
     {
         $container = new ContainerBuilder();
 
@@ -33,14 +33,20 @@ final class PhdExceptionToolkitExtension extends AbstractExtension
         $container->getCompilerPassConfig()->setRemovingPasses([]);
         $container->getCompilerPassConfig()->setAfterRemovingPasses([]);
 
-        $container->registerExtension($extension = new self());
-        $container->loadFromExtension($extension->getAlias());
-
-        $container->addCompilerPass(new DecoratorServicePass(), PassConfig::TYPE_OPTIMIZE);
-
         array_map($container->setParameter(...), array_keys($parameters), $parameters); // @phpstan-ignore argument.type
 
+        $this->configureContainer($container);
+
         return $container;
+    }
+
+    /** @internal PhPhD */
+    public function configureContainer(ContainerBuilder $container): void
+    {
+        $container->registerExtension($this);
+        $container->loadFromExtension($this->getAlias());
+
+        $container->addCompilerPass(new DecoratorServicePass(), PassConfig::TYPE_OPTIMIZE);
     }
 
     /**

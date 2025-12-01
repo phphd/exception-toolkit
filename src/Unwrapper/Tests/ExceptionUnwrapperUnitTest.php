@@ -29,7 +29,7 @@ final class ExceptionUnwrapperUnitTest extends TestCase
     {
         parent::setUp();
 
-        $container = PhdExceptionToolkitExtension::getContainer([
+        $container = (new PhdExceptionToolkitExtension())->getContainer([
             'kernel.environment' => 'test',
             'kernel.build_dir' => __DIR__.'/var',
         ]);
