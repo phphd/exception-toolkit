@@ -9,13 +9,13 @@
 
 ## Installation 📥
 
-1. Install via composer
+1. Install via composer:
 
     ```sh
     composer require phphd/exception-toolkit
     ```
 
-2. In case you are using symfony, enable the bundle in the `bundles.php`
+2. If you are using Symfony, enable the bundle in the `bundles.php`
 
     ```php
     PhPhD\ExceptionToolkit\Bundle\PhdExceptionToolkitBundle::class => ['all' => true],
@@ -31,7 +31,6 @@ Allows you to unwrap composite exceptions and get the atomic errors you are inte
 use PhPhD\ExceptionToolkit\Unwrapper\ExceptionUnwrapper;
 
 /** @var ExceptionUnwrapper $unwrapper */
-$unwrapper = getUnwrapper(); 
 
 $compositeException = new CompositeException([
     new InvalidEmailException(),

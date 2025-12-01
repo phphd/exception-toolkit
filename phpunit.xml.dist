@@ -21,5 +21,11 @@
         <include>
             <directory>src</directory>
         </include>
+        <exclude>
+            <directory>src/*/*/Tests</directory>
+            <directory>src/*/*/*/Tests</directory>
+            <directory suffix="Test.php">src</directory>
+            <directory suffix="services.php">src</directory>
+        </exclude>
     </source>
 </phpunit>

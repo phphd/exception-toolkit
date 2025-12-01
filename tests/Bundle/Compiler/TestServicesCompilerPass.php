@@ -11,6 +11,6 @@ final class TestServicesCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        $container->getDefinition('phd_exception_toolkit.exception_unwrapper')->setPublic(true);
+        $container->getAlias('phd_exception_toolkit.exception_unwrapper')->setPublic(true);
     }
 }
